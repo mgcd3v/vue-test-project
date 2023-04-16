@@ -1,0 +1,114 @@
+/* @import './base.css'; */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theming */
+html.dark {
+  color-scheme: dark;
+}
+
+.theme-light {
+  --background: #f8f8f8;
+  --text: #313131;
+}
+
+.theme-dark {
+  --background: #313131;
+  --text: #f8f8f8;
+}
+
+.toggle-blue {
+  --toggle-bg-on: blue;
+  --toggle-border-on: blue;
+}
+
+/* Generic */
+header .wrapper {
+  @apply flex justify-between mb-6;
+}
+
+.form-control {
+  @apply grid justify-stretch items-center gap-2;
+}
+
+.form-control label {
+  @apply font-bold;
+}
+
+.success {
+  @apply text-green-500;
+}
+
+.error {
+  @apply text-red-500;
+}
+
+/* Components */
+.button:disabled, .form-button:disabled {
+  @apply bg-blue-300 dark:bg-gray-200;
+  cursor: not-allowed;
+}
+
+.button, .form-button {
+  @apply border border-blue-600 rounded-xl bg-blue-500 text-white py-2 px-4 dark:bg-black border-white;
+  cursor: pointer;
+}
+
+.input input, .text-area textarea {
+  @apply border rounded-xl p-2;
+}
+
+.table > div {
+  @apply flex justify-between items-center mb-2;
+}
+
+.table > div h1 {
+  @apply font-bold;
+}
+
+.table table {
+  @apply table-auto shadow-lg rounded-xl bg-white border-collapse border-blue-600 dark:bg-black border-white;
+}
+
+.table table th {
+  @apply border bg-blue-500 text-left text-white p-2 dark:bg-black border-white;
+}
+
+.table table td {
+  @apply border p-4;
+}
+
+.theme label {
+  @apply mr-2;
+}
+ 
+.theme-button {
+  @apply border px-4 py-2 text-white bg-blue-500 rounded-xl self-end dark:bg-black border-white;
+}
+
+.login-form form {
+  @apply flex gap-2 items-end;
+}
+
+/* Specific */
+#app {
+  @apply w-[1280px] mx-auto p-10;
+}
+
+#user-detail {
+  @apply w-[500px] mx-auto;
+}
+
+#user-detail form {
+  @apply border rounded-xl p-5;
+}
+
+#user-detail form > div {
+  @apply mb-4;
+}
+
+#user-detail form > div.actions {
+  @apply flex justify-between mt-6;
+}
