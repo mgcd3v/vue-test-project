@@ -29,10 +29,10 @@ export const useAuthStore = defineStore('auth', {
         this.credential[prop] = value
     },
 
-    async login() {
+    async login(form) {
         const result = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
             method: 'POST',
-            body: JSON.stringify(this.credential),
+            body: JSON.stringify(form),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }

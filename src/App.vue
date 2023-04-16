@@ -1,12 +1,22 @@
 <template>
-  <header>
-    <div class="wrapper">
-      <LoginForm />
-      <ToggleTheme />
-    </div>
-  </header>
-
-  <RouterView />
+  <div>
+    <header>
+      <div class="wrapper">
+        <LoginForm />
+        <ToggleTheme />
+      </div>
+    </header>
+    <router-view v-slot="{ Component }">
+      <suspense timeout="0">
+        <template #default>
+          <component :is="Component" :key="$route.path"></component>
+        </template>
+        <template #fallback>
+          <div>Loading...</div>
+        </template>
+      </suspense>
+    </router-view>
+  </div>
 </template>
 
 <script setup>

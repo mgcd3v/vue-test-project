@@ -7,8 +7,7 @@
                     id="email"
                     label="Email"
                     is-required="true"
-                    :value="authStore.credential.email"
-                    @setValue="setValue($event)"
+                    v-model="form.email"
                 />
             </div>
             <div>
@@ -17,8 +16,7 @@
                     id="password"
                     label="Password"
                     is-required="true"
-                    :value="authStore.credential.password"
-                    @setValue="setValue($event)"
+                    v-model="form.password"
                 />
             </div>
             <div class="actions">
@@ -38,23 +36,30 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-import Button from '../components/ui/Button.vue'
-import FormButton from '../components/ui/FormButton.vue'
-import Input from '../components/ui/Input.vue'
-import TextArea from '../components/ui/TextArea.vue'
+import {
+    Button,
+    FormButton,
+    Input
+} from '@/components/ui'
 
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores'
 
 const router = useRouter()
 const route = useRoute()
 
 const authStore = useAuthStore()
 
-const setValue = ({prop, value}) => {
-    authStore.setCredential(prop, value)
+const form = reactive({
+  email: '',
+  password: ''
+});
+
+const onLoad = () => {
+    authStore.initializeMessage()
+    authStore.initializeCredential()
 }
 
 const onLogoutButtonClick = async() => {
@@ -62,14 +67,12 @@ const onLogoutButtonClick = async() => {
 }
 
 const onFormSubmit = async() => {
-    await authStore.login()
+    await authStore.login(form)
 
     if(authStore.isLoggedIn === true) {
         await authStore.getMe()
     }
 }
 
-onMounted(async() => {
-    authStore.initializeCredential()
-})
+onLoad()
 </script>

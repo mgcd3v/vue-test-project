@@ -36,6 +36,7 @@ export const useUsersStore = defineStore('users', {
     currentItem: (state) => {
         return {
             ...state.item,
+            password: state.item.password !== defaultItem.password? '' : defaultItem.password,
             date: moment(state.item.date).format('yyyy-MM-DD'),
         }
     }
@@ -67,10 +68,10 @@ export const useUsersStore = defineStore('users', {
         this.item = response? response[0] : {};
     },
 
-    async insert() {
+    async insert(form) {
         const result = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
             method: 'POST',
-            body: JSON.stringify(this.item),
+            body: JSON.stringify(form),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
@@ -84,10 +85,10 @@ export const useUsersStore = defineStore('users', {
         }
     },
 
-    async update(id) {
+    async update(id, form) {
         const result = await fetch(`${import.meta.env.VITE_API_URL}/users/${id}`, {
             method: 'PUT',
-            body: JSON.stringify(this.item),
+            body: JSON.stringify(form),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }

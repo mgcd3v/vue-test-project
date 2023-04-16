@@ -17,12 +17,11 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
-import Table from '@/components/ui/Table.vue'
+import { Table } from '@/components/ui'
 
-import { useUsersStore } from '@/stores/users'
+import { useUsersStore } from '@/stores'
 
 const router = useRouter()
 
@@ -30,12 +29,13 @@ const usersStore = useUsersStore()
 
 const headers = ['Id', 'Email', 'Full Name', 'Address', 'Phone Number', 'Date']
 
+const onLoad = async() => {
+    await usersStore.get()
+}
+
 const onCreateButtonClick = () => {
     router.push('/userdetail');
 }
 
-onMounted(async() => {
-    await usersStore.get()
-})
-
+await onLoad()
 </script>

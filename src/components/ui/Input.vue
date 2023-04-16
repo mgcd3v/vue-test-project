@@ -2,24 +2,42 @@
     <div class="input form-control">
         <label :for="id">{{ label }}</label>
         <input
+            ref="input"
             :class="class"
             :type="type ?? text"
             :id="id"
             :required="isRequired"
-            :disabled="disabled"
-            :value="value"
-            @focusout="setValue"
+            :disabled="disabled"           
+            :value="inputValue"
+            @input="emit('update:modelValue', $event.target.value)"
+            @focusout="emit('update:modelValue', $event.target.value)"
         />
     </div>
 </template>
 
 <script setup>
-const props = defineProps(['class', 'type', 'id', 'label', 'isRequired', 'disabled', 'value'])
+import { computed } from 'vue';
 
-const emit = defineEmits(['setValue'])
+const props = defineProps(['class', 'type', 'id', 'label', 'isRequired', 'disabled', 'value', 'modelValue'])
 
+const emit = defineEmits(['update:modelValue'])
 
-const setValue = (e) => {
-    emit('setValue', { prop: props.id, value: e.target.value });
-}
+const inputValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit('update:modelValue', val)
+  },
+});
+
+const focus = () => {
+  this.$refs.input.focus();
+};
+
+defineExpose({
+  inputValue,
+  focus,
+  emit,
+});
 </script>
